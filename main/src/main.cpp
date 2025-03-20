@@ -10,5 +10,4 @@ int main(int argc, char **argv) {
     std::cerr << "Error opening file: " << argv[1] << std::endl;
     return 1;
   }
-  v.push_back(42);
 }
