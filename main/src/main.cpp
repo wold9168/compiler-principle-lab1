@@ -1,13 +1,18 @@
 #include "main/main.hpp"
+#include "parser.h"
+#include "lexer.h"
 
 int main(int argc, char **argv) {
-  if (argc != 1) {
+  if (argc < 2) {
     std::cerr << "Usage: ./main <input_file>" << std::endl;
     return 1;
   }
-  std::ifstream input(argv[1]);
-  if (!input.is_open()) {
-    std::cerr << "Error opening file: " << argv[1] << std::endl;
+  // FILE *fp;
+  if(!(yyin=fopen(argv[1], "r"))) {
+    std::cerr << "Error: Could not open input file." << std::endl;
     return 1;
   }
+
+  yylex();
+  global_token_list.traverse();
 }
