@@ -1,14 +1,16 @@
 %option noyywrap
 /* %option nounput noinput batch debug */
-%option yylineno
+/* %option yylineno */
 
 %{
 #include <bits/stdc++.h>
 #include "bits/allds.hpp"
 // #include "parser.h"
+extern int yylineno;
 %}
 
 BLANK [\t ]
+LINEBREAK \n
 
 CONST_INT_DEC 0|([1-9][0-9]*)
 CONST_INT_HEX 0(x|X)[0-9a-fA-F]+
@@ -52,6 +54,7 @@ LEX_ERROR .
 %%
 
 {BLANK} {;}
+{LINEBREAK} {++yylineno;}
 
 {CONST_INT_DEC} {append_to_global_token_list(INT,yytext);}
 {CONST_INT_HEX} {append_to_global_token_list(INT,yytext);}
