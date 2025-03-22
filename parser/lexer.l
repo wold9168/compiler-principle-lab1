@@ -95,7 +95,7 @@ LEX_ERROR .
 {ID} {append_to_global_token_list(ID,yytext);}
 
 {LEX_ERROR} {
-    fprintf(stderr,"Error type A at line %d: Lexical analyser encountered unexpected '%s' \n",yylineno,yytext);
+    fprintf(stderr,"Error type A at Line %d: Lexical analyser encountered unexpected '%s' \n",yylineno,yytext);
 }
 
 %%
