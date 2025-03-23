@@ -1,3 +1,2 @@
 #pragma once
-#include "lexer.h"
-#include "parser.h"
+#include "bits/allds.hpp"

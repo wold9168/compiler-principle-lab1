@@ -1,4 +1,5 @@
 #include "main/main.hpp"
+#include "bits/allds.hpp"
 #include "parser.h"
 #include "lexer.h"
 
@@ -13,6 +14,7 @@ int main(int argc, char **argv) {
     return 1;
   }
 
-  yylex();
+  yyrestart(yyin);
+  yyparse();
   global_token_list.traverse();
 }

@@ -1,13 +1,18 @@
-%option noyywrap
-/* %option nounput noinput batch debug */
-/* %option yylineno */
-
 %{
 #include <bits/stdc++.h>
 #include "bits/allds.hpp"
-// #include "parser.h"
+#define YYSTYPE pNode
+#include "parser.h"
 extern int yylineno;
+int tokenlex(enum TokenType t, const std::string &attribute, YYSTYPE * pt_yylval);
+int yycolumn = 1;
+#define YY_USER_ACTION yylloc->first_line = yylloc->last_line = yylineno;
 %}
+%option noyywrap
+/* %option nounput noinput batch debug */
+%option yylineno
+%option bison-bridge
+%option bison-locations
 
 BLANK [\t ]
 LINEBREAK \n
@@ -54,48 +59,54 @@ LEX_ERROR .
 %%
 
 {BLANK} {;}
-{LINEBREAK} {++yylineno;}
+{LINEBREAK} {++yylineno; yycolumn = 1; }
 
-{CONST_INT_DEC} {append_to_global_token_list(INT,yytext);}
-{CONST_INT_HEX} {append_to_global_token_list(INT,yytext);}
-{CONST_INT_OCT} {append_to_global_token_list(INT,yytext);}
-{CONST_FLOAT_NUMBER} {append_to_global_token_list(FLOAT,yytext);}
-{CONST_FLOAT_E} {append_to_global_token_list(FLOAT,yytext);}
+{CONST_INT_DEC} {tokenlex(INT,yytext,yylval);}
+{CONST_INT_HEX} {tokenlex(INT,yytext,yylval);}
+{CONST_INT_OCT} {tokenlex(INT,yytext,yylval);}
+{CONST_FLOAT_NUMBER} {tokenlex(FLOAT,yytext,yylval);}
+{CONST_FLOAT_E} {tokenlex(FLOAT,yytext,yylval);}
 
-{DELIMITER_SEMI} {append_to_global_token_list(SEMI,yytext);}
-{OPERATOR_COMMA} {append_to_global_token_list(COMMA,yytext);}
-{OPERATOR_ASSIGNOP} {append_to_global_token_list(ASSIGNOP,yytext);}
-{OPERATOR_RELOP_LT} {append_to_global_token_list(RELOP,yytext);}
-{OPERATOR_RELOP_RT} {append_to_global_token_list(RELOP,yytext);}
-{OPERATOR_RELOP_LE} {append_to_global_token_list(RELOP,yytext);}
-{OPERATOR_RELOP_RE} {append_to_global_token_list(RELOP,yytext);}
-{OPERATOR_RELOP_EQ} {append_to_global_token_list(RELOP,yytext);}
-{OPERATOR_RELOP_NE} {append_to_global_token_list(RELOP,yytext);}
-{OPERATOR_PLUS} {append_to_global_token_list(PLUS,yytext);}
-{OPERATOR_MINUS} {append_to_global_token_list(MINUS,yytext);}
-{OPERATOR_STAR} {append_to_global_token_list(STAR,yytext);}
-{OPERATOR_DIV} {append_to_global_token_list(DIV,yytext);}
-{OPERATOR_AND} {append_to_global_token_list(AND,yytext);}
-{OPERATOR_OR} {append_to_global_token_list(OR,yytext);}
-{OPERATOR_DOT} {append_to_global_token_list(DOT,yytext);}
-{OPERATOR_NOT} {append_to_global_token_list(NOT,yytext);}
-{KEYWORD_TYPE} {append_to_global_token_list(TYPE,yytext);}
-{DELIMITER_LP} {append_to_global_token_list(LP,yytext);}
-{DELIMITER_RP} {append_to_global_token_list(RP,yytext);}
-{DELIMITER_LB} {append_to_global_token_list(LB,yytext);}
-{DELIMITER_RB} {append_to_global_token_list(RB,yytext);}
-{DELIMITER_LC} {append_to_global_token_list(LC,yytext);}
-{DELIMITER_RC} {append_to_global_token_list(RC,yytext);}
-{KEYWORD_STRUCT} {append_to_global_token_list(STRUCT,yytext);}
-{KEYWORD_RETURN} {append_to_global_token_list(RETURN,yytext);}
-{KEYWORD_IF} {append_to_global_token_list(IF,yytext);}
-{KEYWORD_ELSE} {append_to_global_token_list(ELSE,yytext);}
-{KEYWORD_WHILE} {append_to_global_token_list(WHILE,yytext);}
+{DELIMITER_SEMI} {tokenlex(SEMI,yytext,yylval);}
+{OPERATOR_COMMA} {tokenlex(COMMA,yytext,yylval);}
+{OPERATOR_ASSIGNOP} {tokenlex(ASSIGNOP,yytext,yylval);}
+{OPERATOR_RELOP_LT} {tokenlex(RELOP,yytext,yylval);}
+{OPERATOR_RELOP_RT} {tokenlex(RELOP,yytext,yylval);}
+{OPERATOR_RELOP_LE} {tokenlex(RELOP,yytext,yylval);}
+{OPERATOR_RELOP_RE} {tokenlex(RELOP,yytext,yylval);}
+{OPERATOR_RELOP_EQ} {tokenlex(RELOP,yytext,yylval);}
+{OPERATOR_RELOP_NE} {tokenlex(RELOP,yytext,yylval);}
+{OPERATOR_PLUS} {tokenlex(PLUS,yytext,yylval);}
+{OPERATOR_MINUS} {tokenlex(MINUS,yytext,yylval);}
+{OPERATOR_STAR} {tokenlex(STAR,yytext,yylval);}
+{OPERATOR_DIV} {tokenlex(DIV,yytext,yylval);}
+{OPERATOR_AND} {tokenlex(AND,yytext,yylval);}
+{OPERATOR_OR} {tokenlex(OR,yytext,yylval);}
+{OPERATOR_DOT} {tokenlex(DOT,yytext,yylval);}
+{OPERATOR_NOT} {tokenlex(NOT,yytext,yylval);}
+{KEYWORD_TYPE} {tokenlex(TYPE,yytext,yylval);}
+{DELIMITER_LP} {tokenlex(LP,yytext,yylval);}
+{DELIMITER_RP} {tokenlex(RP,yytext,yylval);}
+{DELIMITER_LB} {tokenlex(LB,yytext,yylval);}
+{DELIMITER_RB} {tokenlex(RB,yytext,yylval);}
+{DELIMITER_LC} {tokenlex(LC,yytext,yylval);}
+{DELIMITER_RC} {tokenlex(RC,yytext,yylval);}
+{KEYWORD_STRUCT} {tokenlex(STRUCT,yytext,yylval);}
+{KEYWORD_RETURN} {tokenlex(RETURN,yytext,yylval);}
+{KEYWORD_IF} {tokenlex(IF,yytext,yylval);}
+{KEYWORD_ELSE} {tokenlex(ELSE,yytext,yylval);}
+{KEYWORD_WHILE} {tokenlex(WHILE,yytext,yylval);}
 
-{ID} {append_to_global_token_list(ID,yytext);}
+{ID} {tokenlex(ID,yytext,yylval);}
 
 {LEX_ERROR} {
-    fprintf(stderr,"Error type A at Line %d: Lexical analyser encountered unexpected '%s' \n",yylineno,yytext);
+    fprintf(stderr,"Error type A at Line %d: Lexical analyser encountered unexpected '%s' \n",yylineno,yytext,yylval);
 }
 
 %%
+
+int tokenlex(enum TokenType t, const std::string &attribute, YYSTYPE * pt_yylval) {
+  append_to_global_token_list(t, attribute);
+  *pt_yylval = new_token_node(yylineno, t, attribute);
+  return 0;
+}
