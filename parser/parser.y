@@ -5,26 +5,15 @@
 
 %{
 #include "parser/parser.hpp"
-// struct YYLTYPE;
 #include "parser.h"
 
 int yylex(YYSTYPE *yylval, YYLTYPE *yylloc);
-//This line has replaced:
-//#include "lexer.l"
-
-// extern int yylex (YYSTYPE*, YYLTYPE*);
 extern int yylineno;
 
 #include <bits/stdc++.h>
-// void yyerror(YYLTYPE yylloc_, std::string s){
-//     fprintf(stderr, "Error type B at line %d: %s.\n", yylloc_.first_line, s.c_str());
-// }
 void yyerror(YYLTYPE *locp, const char* s) {
     std::cerr << "Error type B at line " << locp->first_line << ": " << s <<"."<< std::endl;
 }
-// void yyerror(std::string s){
-//     fprintf(stderr, "Error type B at line %d: %s.\n", yylineno, s.c_str());
-// }
 %}
 %locations
 // request a pure (reentrant) parser
@@ -33,15 +22,6 @@ void yyerror(YYLTYPE *locp, const char* s) {
 %locations
 // enable verbose syntax error message
 %define parse.error verbose
-
-// %define api.header.include {"lexer.h"}
-// %parse-param { YYLTYPE *yylloc }
-/* %token Program ExtDefList Extdef ExtDecList
-%token Specifier StructSpecifier OptTag Tag
-%token VarDec FunDec VarList ParamDec
-%token CompSt StmtList Stmt
-%token DefList Def DecList Dec
-%token Exp Arg */
 
 // types
 

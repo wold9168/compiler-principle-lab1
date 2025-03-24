@@ -9,13 +9,10 @@
 #include "parser.h"
 
 extern "C" int yylex (YYSTYPE*, YYLTYPE*);
-// #define YYSTYPE pNode
 
 extern int yylineno;
 int tokenlex(enum TokenType t, const std::string &attribute, YYSTYPE * pt_yylval);
 int yycolumn = 1;
-// #define YY_USER_ACTION yylloc->first_line = yylloc->last_line = yylineno;
-// automatically update location
 #define YY_USER_ACTION \
     yylloc->first_line = yylloc->last_line; \
     yylloc->first_column = yylloc->last_column; \
