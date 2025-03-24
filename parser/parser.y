@@ -1,12 +1,12 @@
 %language "C"
 %code requires {
-// #include "bits/allds.hpp"
 }
 
 %{
-#include "parser/parser.hpp"
 #include "parser.h"
-
+#include "parser/parser.hpp"
+#define YYSTYPE pNode
+#include "lexer.h"
 int yylex(YYSTYPE *yylval, YYLTYPE *yylloc);
 extern int yylineno;
 
@@ -25,38 +25,65 @@ void yyerror(YYLTYPE *locp, const char* s) {
 
 // types
 
-%union{
- pNode node;
-}
-
+// %union{
+//  pNode node;
+// }
 // tokens
 
-%token <node> INT_
-%token <node> FLOAT_
-%token <node> ID_
-%token <node> TYPE_
-%token <node> COMMA_
-%token <node> DOT_
-%token <node> SEMI_
-%token <node> RELOP_
-%token <node> ASSIGNOP_
-%token <node> PLUS_ MINUS_ STAR_ DIV_
-%token <node> AND_ OR_ NOT_
-%token <node> LP_ RP_ LB_ RB_ LC_ RC_
-%token <node> IF_
-%token <node> ELSE_
-%token <node> WHILE_
-%token <node> STRUCT_
-%token <node> RETURN_
+%token INT_
+%token FLOAT_
+%token ID_
+%token TYPE_
+%token COMMA_
+%token DOT_
+%token SEMI_
+%token RELOP_
+%token ASSIGNOP_
+%token PLUS_ MINUS_ STAR_ DIV_
+%token AND_ OR_ NOT_
+%token LP_ RP_ LB_ RB_ LC_ RC_
+%token IF_
+%token ELSE_
+%token WHILE_
+%token STRUCT_
+%token RETURN_
 
 // non-terminals
 
-%type <node> Program ExtDefList ExtDef ExtDecList // High-level Definitions
-%type <node> Specifier StructSpecifier OptTag Tag // Specifiers
-%type <node> VarDec FunDec VarList ParamDec // Declarators
-%type <node> CompSt StmtList Stmt // Statements
-%type <node> DefList Def Dec DecList // Local Definitions
-%type <node> Exp Args // Expressions
+%type Program ExtDefList ExtDef ExtDecList // High-level Definitions
+%type Specifier StructSpecifier OptTag Tag // Specifiers
+%type VarDec FunDec VarList ParamDec // Declarators
+%type CompSt StmtList Stmt // Statements
+%type DefList Def Dec DecList // Local Definitions
+%type Exp Args // Expressions
+// // tokens
+
+// %token <node> INT_
+// %token <node> FLOAT_
+// %token <node> ID_
+// %token <node> TYPE_
+// %token <node> COMMA_
+// %token <node> DOT_
+// %token <node> SEMI_
+// %token <node> RELOP_
+// %token <node> ASSIGNOP_
+// %token <node> PLUS_ MINUS_ STAR_ DIV_
+// %token <node> AND_ OR_ NOT_
+// %token <node> LP_ RP_ LB_ RB_ LC_ RC_
+// %token <node> IF_
+// %token <node> ELSE_
+// %token <node> WHILE_
+// %token <node> STRUCT_
+// %token <node> RETURN_
+
+// // non-terminals
+
+// %type <node> Program ExtDefList ExtDef ExtDecList // High-level Definitions
+// %type <node> Specifier StructSpecifier OptTag Tag // Specifiers
+// %type <node> VarDec FunDec VarList ParamDec // Declarators
+// %type <node> CompSt StmtList Stmt // Statements
+// %type <node> DefList Def Dec DecList // Local Definitions
+// %type <node> Exp Args // Expressions
 
 // precedence and associativity
 

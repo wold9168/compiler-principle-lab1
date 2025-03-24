@@ -6,9 +6,8 @@
 %option noinput
 %{
 #include "parser/parser.hpp"
+#define YYSTYPE pNode
 #include "parser.h"
-
-extern "C" int yylex (YYSTYPE*, YYLTYPE*);
 
 extern int yylineno;
 int tokenlex(enum TokenType t, const std::string &attribute, YYSTYPE * pt_yylval);
@@ -118,8 +117,8 @@ LEX_ERROR .
 
 %%
 
-int tokenlex(enum TokenType t, const std::string &attribute, YYSTYPE * pt_yylval) {
+int tokenlex(enum TokenType t, const std::string &attribute, YYSTYPE *pt_yylval) {
   append_to_global_token_list(t, attribute);
-  pt_yylval->node = new_token_node(yylineno, t, attribute);
+  *pt_yylval = new_token_node(yylineno, t, attribute);
   return 0;
 }

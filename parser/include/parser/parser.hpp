@@ -71,3 +71,4 @@ static inline void preordered_traverse(pNode current_node, int height = 0) {
 }
 
 extern pNode root;
+#define YYSTYPE pNode
