@@ -73,43 +73,43 @@ LEX_ERROR .
 {BLANK} {;}
 {LINEBREAK} {++yylineno; yycolumn = 1; }
 
-{CONST_INT_DEC} {tokenlex(INT,yytext,yylval);}
-{CONST_INT_HEX} {tokenlex(INT,yytext,yylval);}
-{CONST_INT_OCT} {tokenlex(INT,yytext,yylval);}
-{CONST_FLOAT_NUMBER} {tokenlex(FLOAT,yytext,yylval);}
-{CONST_FLOAT_E} {tokenlex(FLOAT,yytext,yylval);}
+{CONST_INT_DEC} {tokenlex(INT,yytext,yylval);return INT_;}
+{CONST_INT_HEX} {tokenlex(INT,yytext,yylval);return INT_;}
+{CONST_INT_OCT} {tokenlex(INT,yytext,yylval);return INT_;}
+{CONST_FLOAT_NUMBER} {tokenlex(FLOAT,yytext,yylval);return FLOAT_;}
+{CONST_FLOAT_E} {tokenlex(FLOAT,yytext,yylval);return FLOAT_;}
 
-{DELIMITER_SEMI} {tokenlex(SEMI,yytext,yylval);}
-{OPERATOR_COMMA} {tokenlex(COMMA,yytext,yylval);}
-{OPERATOR_ASSIGNOP} {tokenlex(ASSIGNOP,yytext,yylval);}
-{OPERATOR_RELOP_LT} {tokenlex(RELOP,yytext,yylval);}
-{OPERATOR_RELOP_RT} {tokenlex(RELOP,yytext,yylval);}
-{OPERATOR_RELOP_LE} {tokenlex(RELOP,yytext,yylval);}
-{OPERATOR_RELOP_RE} {tokenlex(RELOP,yytext,yylval);}
-{OPERATOR_RELOP_EQ} {tokenlex(RELOP,yytext,yylval);}
-{OPERATOR_RELOP_NE} {tokenlex(RELOP,yytext,yylval);}
-{OPERATOR_PLUS} {tokenlex(PLUS,yytext,yylval);}
-{OPERATOR_MINUS} {tokenlex(MINUS,yytext,yylval);}
-{OPERATOR_STAR} {tokenlex(STAR,yytext,yylval);}
-{OPERATOR_DIV} {tokenlex(DIV,yytext,yylval);}
-{OPERATOR_AND} {tokenlex(AND,yytext,yylval);}
-{OPERATOR_OR} {tokenlex(OR,yytext,yylval);}
-{OPERATOR_DOT} {tokenlex(DOT,yytext,yylval);}
-{OPERATOR_NOT} {tokenlex(NOT,yytext,yylval);}
-{KEYWORD_TYPE} {tokenlex(TYPE,yytext,yylval);}
-{DELIMITER_LP} {tokenlex(LP,yytext,yylval);}
-{DELIMITER_RP} {tokenlex(RP,yytext,yylval);}
-{DELIMITER_LB} {tokenlex(LB,yytext,yylval);}
-{DELIMITER_RB} {tokenlex(RB,yytext,yylval);}
-{DELIMITER_LC} {tokenlex(LC,yytext,yylval);}
-{DELIMITER_RC} {tokenlex(RC,yytext,yylval);}
-{KEYWORD_STRUCT} {tokenlex(STRUCT,yytext,yylval);}
-{KEYWORD_RETURN} {tokenlex(RETURN,yytext,yylval);}
-{KEYWORD_IF} {tokenlex(IF,yytext,yylval);}
-{KEYWORD_ELSE} {tokenlex(ELSE,yytext,yylval);}
-{KEYWORD_WHILE} {tokenlex(WHILE,yytext,yylval);}
+{DELIMITER_SEMI} {tokenlex(SEMI,yytext,yylval);return SEMI_;}
+{OPERATOR_COMMA} {tokenlex(COMMA,yytext,yylval);return COMMA_;}
+{OPERATOR_ASSIGNOP} {tokenlex(ASSIGNOP,yytext,yylval);return ASSIGNOP_;}
+{OPERATOR_RELOP_LT} {tokenlex(RELOP,yytext,yylval);return RELOP_;}
+{OPERATOR_RELOP_RT} {tokenlex(RELOP,yytext,yylval);return RELOP_;}
+{OPERATOR_RELOP_LE} {tokenlex(RELOP,yytext,yylval);return RELOP_;}
+{OPERATOR_RELOP_RE} {tokenlex(RELOP,yytext,yylval);return RELOP_;}
+{OPERATOR_RELOP_EQ} {tokenlex(RELOP,yytext,yylval);return RELOP_;}
+{OPERATOR_RELOP_NE} {tokenlex(RELOP,yytext,yylval);return RELOP_;}
+{OPERATOR_PLUS} {tokenlex(PLUS,yytext,yylval);return PLUS_;}
+{OPERATOR_MINUS} {tokenlex(MINUS,yytext,yylval);return MINUS_;}
+{OPERATOR_STAR} {tokenlex(STAR,yytext,yylval);return STAR_;}
+{OPERATOR_DIV} {tokenlex(DIV,yytext,yylval);return DIV_;}
+{OPERATOR_AND} {tokenlex(AND,yytext,yylval);return AND_;}
+{OPERATOR_OR} {tokenlex(OR,yytext,yylval);return OR_;}
+{OPERATOR_DOT} {tokenlex(DOT,yytext,yylval);return DOT_;}
+{OPERATOR_NOT} {tokenlex(NOT,yytext,yylval);return NOT_;}
+{KEYWORD_TYPE} {tokenlex(TYPE,yytext,yylval);return TYPE_;}
+{DELIMITER_LP} {tokenlex(LP,yytext,yylval);return LP_;}
+{DELIMITER_RP} {tokenlex(RP,yytext,yylval);return RP_;}
+{DELIMITER_LB} {tokenlex(LB,yytext,yylval);return LB_;}
+{DELIMITER_RB} {tokenlex(RB,yytext,yylval);return RB_;}
+{DELIMITER_LC} {tokenlex(LC,yytext,yylval);return LC_;}
+{DELIMITER_RC} {tokenlex(RC,yytext,yylval);return RC_;}
+{KEYWORD_STRUCT} {tokenlex(STRUCT,yytext,yylval);return STRUCT_;}
+{KEYWORD_RETURN} {tokenlex(RETURN,yytext,yylval);return RETURN_;}
+{KEYWORD_IF} {tokenlex(IF,yytext,yylval);return IF_;}
+{KEYWORD_ELSE} {tokenlex(ELSE,yytext,yylval);return ELSE_;}
+{KEYWORD_WHILE} {tokenlex(WHILE,yytext,yylval);return WHILE_;}
 
-{ID} {tokenlex(ID,yytext,yylval);}
+{ID} {tokenlex(ID,yytext,yylval);return ID_;}
 
 {LEX_ERROR} {
     fprintf(stderr,"Error type A at Line %d: Lexical analyser encountered unexpected '%s' \n",yylineno,yytext,yylval);
