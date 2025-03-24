@@ -56,6 +56,7 @@ void yyerror(YYLTYPE *locp, const char* s) {
 %type CompSt StmtList Stmt // Statements
 %type DefList Def Dec DecList // Local Definitions
 %type Exp Args // Expressions
+
 // // tokens
 
 // %token <node> INT_
@@ -102,67 +103,67 @@ void yyerror(YYLTYPE *locp, const char* s) {
 
 %%
 
-Program: ExtDefList {$$ = new_node(@$.first_line,Token(NOT_TOKEN,"Program"),1,$1);root = $$;};
-ExtDefList: ExtDef ExtDefList {$$ = new_node(@$.first_line,Token(NOT_TOKEN,"ExtDefList"),2,$1,$2);}
-    |  {$$ = nullptr;};
-ExtDef: Specifier ExtDecList SEMI_ {$$ = new_node(@$.first_line,Token(NOT_TOKEN,"ExtDef"),3,$1,$2,$3);}
-    | Specifier SEMI_ {$$ = new_node(@$.first_line,Token(NOT_TOKEN,"ExtDef"),2,$1,$2);}
-    | Specifier FunDec CompSt  {$$ = new_node(@$.first_line,Token(NOT_TOKEN,"ExtDef"),3,$1,$2,$3);};
-ExtDecList: VarDec {$$ = new_node(@$.first_line,Token(NOT_TOKEN,"ExtDecList"),1,$1);}
-    | VarDec COMMA_ ExtDecList {$$ = new_node(@$.first_line,Token(NOT_TOKEN,"ExtDecList"),3,$1,$2,$3);};
+Program: ExtDefList {$$ = new_node(@$.first_line,Token(NOT_TOKEN,"Program"),1,$1);root = $$;std::cout<<$$<<std::endl;}
+ExtDefList: ExtDef ExtDefList {$$ = new_node(@$.first_line,Token(NOT_TOKEN,"ExtDefList"),2,$1,$2);std::cout<<$$<<std::endl;}
+    |  {$$ = nullptr;std::cout<<$$<<std::endl;}
+ExtDef: Specifier ExtDecList SEMI_ {$$ = new_node(@$.first_line,Token(NOT_TOKEN,"ExtDef"),3,$1,$2,$3);std::cout<<$$<<std::endl;}
+    | Specifier SEMI_ {$$ = new_node(@$.first_line,Token(NOT_TOKEN,"ExtDef"),2,$1,$2);std::cout<<$$<<std::endl;}
+    | Specifier FunDec CompSt  {$$ = new_node(@$.first_line,Token(NOT_TOKEN,"ExtDef"),3,$1,$2,$3);std::cout<<$$<<std::endl;}
+ExtDecList: VarDec {$$ = new_node(@$.first_line,Token(NOT_TOKEN,"ExtDecList"),1,$1);std::cout<<$$<<std::endl;}
+    | VarDec COMMA_ ExtDecList {$$ = new_node(@$.first_line,Token(NOT_TOKEN,"ExtDecList"),3,$1,$2,$3);std::cout<<$$<<std::endl;}
 
-Specifier: TYPE_ {$$ = new_node(@$.first_line,Token(NOT_TOKEN,"Specifier"),1,$1);}
-    | StructSpecifier {$$ = new_node(@$.first_line,Token(NOT_TOKEN,"Specifier"),1,$1);};
-StructSpecifier: STRUCT_ OptTag LC_ DefList RC_ {$$ = new_node(@$.first_line,Token(NOT_TOKEN,"StructSpecifier"),5,$1,$2,$3,$4,$5);}
-    | STRUCT_ Tag {$$ = new_node(@$.first_line,Token(NOT_TOKEN,"StructSpecifier"),2,$1,$2);};
-OptTag: ID_ {$$ = new_node(@$.first_line,Token(NOT_TOKEN,"OptTag"),1,$1);}
-    |  {$$ = nullptr;};
-Tag: ID_ {$$ = new_node(@$.first_line,Token(NOT_TOKEN,"OptTag"),1,$1);};
+Specifier: TYPE_ {$$ = new_node(@$.first_line,Token(NOT_TOKEN,"Specifier"),1,$1);std::cout<<$$<<std::endl;}
+    | StructSpecifier {$$ = new_node(@$.first_line,Token(NOT_TOKEN,"Specifier"),1,$1);std::cout<<$$<<std::endl;}
+StructSpecifier: STRUCT_ OptTag LC_ DefList RC_ {$$ = new_node(@$.first_line,Token(NOT_TOKEN,"StructSpecifier"),5,$1,$2,$3,$4,$5);std::cout<<$$<<std::endl;}
+    | STRUCT_ Tag {$$ = new_node(@$.first_line,Token(NOT_TOKEN,"StructSpecifier"),2,$1,$2);std::cout<<$$<<std::endl;}
+OptTag: ID_ {$$ = new_node(@$.first_line,Token(NOT_TOKEN,"OptTag"),1,$1);std::cout<<$$<<std::endl;}
+    |  {$$ = nullptr;std::cout<<$$<<std::endl;}
+Tag: ID_ {$$ = new_node(@$.first_line,Token(NOT_TOKEN,"OptTag"),1,$1);std::cout<<$$<<std::endl;}
 
-VarDec: ID_ {$$ = new_node(@$.first_line,Token(NOT_TOKEN,"ExtDecList"),1,$1);}
-    | VarDec LB_ INT_ RB_ {$$ = new_node(@$.first_line,Token(NOT_TOKEN,"VarDec"),4,$1,$2,$3,$4);};
-FunDec: ID_ LP_ VarList RP_ {$$ = new_node(@$.first_line,Token(NOT_TOKEN,"FunDec"),4,$1,$2,$3,$4);}
-    | ID_ LP_ RP_ {$$ = new_node(@$.first_line,Token(NOT_TOKEN,"FunDec"),3,$1,$2,$3);};
-VarList: ParamDec COMMA_ VarList {$$ = new_node(@$.first_line,Token(NOT_TOKEN,"VarList"),3,$1,$2,$3);}
-    | ParamDec {$$ = new_node(@$.first_line,Token(NOT_TOKEN,"VarList"),1,$1);};
-ParamDec: Specifier VarDec {$$ = new_node(@$.first_line,Token(NOT_TOKEN,"ParamDec"),2,$1,$2);};
+VarDec: ID_ {$$ = new_node(@$.first_line,Token(NOT_TOKEN,"ExtDecList"),1,$1);std::cout<<$$<<std::endl;}
+    | VarDec LB_ INT_ RB_ {$$ = new_node(@$.first_line,Token(NOT_TOKEN,"VarDec"),4,$1,$2,$3,$4);std::cout<<$$<<std::endl;}
+FunDec: ID_ LP_ VarList RP_ {$$ = new_node(@$.first_line,Token(NOT_TOKEN,"FunDec"),4,$1,$2,$3,$4);std::cout<<$$<<std::endl;}
+    | ID_ LP_ RP_ {$$ = new_node(@$.first_line,Token(NOT_TOKEN,"FunDec"),3,$1,$2,$3);std::cout<<$$<<std::endl;}
+VarList: ParamDec COMMA_ VarList {$$ = new_node(@$.first_line,Token(NOT_TOKEN,"VarList"),3,$1,$2,$3);std::cout<<$$<<std::endl;}
+    | ParamDec {$$ = new_node(@$.first_line,Token(NOT_TOKEN,"VarList"),1,$1);std::cout<<$$<<std::endl;}
+ParamDec: Specifier VarDec {$$ = new_node(@$.first_line,Token(NOT_TOKEN,"ParamDec"),2,$1,$2);std::cout<<$$<<std::endl;}
 
-CompSt: LC_ DefList StmtList RC_ {$$ = new_node(@$.first_line,Token(NOT_TOKEN,"CompSt"),4,$1,$2,$3,$4);};
-StmtList: Stmt StmtList {$$ = new_node(@$.first_line,Token(NOT_TOKEN,"Stmt"),2,$1,$2);}
-    |  {$$ = nullptr;};
-Stmt: Exp SEMI_ {$$ = new_node(@$.first_line,Token(NOT_TOKEN,"Stmt"),2,$1,$2);}
-    | CompSt {$$ = new_node(@$.first_line,Token(NOT_TOKEN,"Stmt"),1,$1);}
-    | RETURN_ Exp SEMI_ {$$ = new_node(@$.first_line,Token(NOT_TOKEN,"Stmt"),3,$1,$2,$3);}
-    | IF_ LP_ Exp RP_ Stmt {$$ = new_node(@$.first_line,Token(NOT_TOKEN,"Stmt"),5,$1,$2,$3,$4,$5);}
-    | IF_ LP_ Exp RP_ Stmt ELSE_ Stmt {$$ = new_node(@$.first_line,Token(NOT_TOKEN,"Stmt"),7,$1,$2,$3,$4,$5,$6,$7);}
-    | WHILE_ LP_ Exp RP_ Stmt {$$ = new_node(@$.first_line,Token(NOT_TOKEN,"Stmt"),5,$1,$2,$3,$4,$5);};
+CompSt: LC_ DefList StmtList RC_ {$$ = new_node(@$.first_line,Token(NOT_TOKEN,"CompSt"),4,$1,$2,$3,$4);std::cout<<$$<<std::endl;}
+StmtList: Stmt StmtList {$$ = new_node(@$.first_line,Token(NOT_TOKEN,"Stmt"),2,$1,$2);std::cout<<$$<<std::endl;}
+    |  {$$ = nullptr;std::cout<<$$<<std::endl;}
+Stmt: Exp SEMI_ {$$ = new_node(@$.first_line,Token(NOT_TOKEN,"Stmt"),2,$1,$2);std::cout<<$$<<std::endl;}
+    | CompSt {$$ = new_node(@$.first_line,Token(NOT_TOKEN,"Stmt"),1,$1);std::cout<<$$<<std::endl;}
+    | RETURN_ Exp SEMI_ {$$ = new_node(@$.first_line,Token(NOT_TOKEN,"Stmt"),3,$1,$2,$3);std::cout<<$$<<std::endl;}
+    | IF_ LP_ Exp RP_ Stmt {$$ = new_node(@$.first_line,Token(NOT_TOKEN,"Stmt"),5,$1,$2,$3,$4,$5);std::cout<<$$<<std::endl;}
+    | IF_ LP_ Exp RP_ Stmt ELSE_ Stmt {$$ = new_node(@$.first_line,Token(NOT_TOKEN,"Stmt"),7,$1,$2,$3,$4,$5,$6,$7);std::cout<<$$<<std::endl;}
+    | WHILE_ LP_ Exp RP_ Stmt {$$ = new_node(@$.first_line,Token(NOT_TOKEN,"Stmt"),5,$1,$2,$3,$4,$5);std::cout<<$$<<std::endl;}
 
-DefList: Def DefList {$$ = new_node(@$.first_line,Token(NOT_TOKEN,"DefList"),2,$1,$2);}
-    |  {$$ = nullptr;};
-Def: Specifier DecList SEMI_ {$$ = new_node(@$.first_line,Token(NOT_TOKEN,"Def"),3,$1,$2,$3);};
-DecList: Dec {$$ = new_node(@$.first_line,Token(NOT_TOKEN,"DecList"),1,$1);}
-    | Dec COMMA_ DecList {$$ = new_node(@$.first_line,Token(NOT_TOKEN,"DecList"),3,$1,$2,$3);};
-Dec: VarDec {$$ = new_node(@$.first_line,Token(NOT_TOKEN,"Dec"),1,$1);}
-    | VarDec ASSIGNOP_ Exp {$$ = new_node(@$.first_line,Token(NOT_TOKEN,"Dec"),3,$1,$2,$3);};
+DefList: Def DefList {$$ = new_node(@$.first_line,Token(NOT_TOKEN,"DefList"),2,$1,$2);std::cout<<$$<<std::endl;}
+    |  {$$ = nullptr;std::cout<<$$<<std::endl;}
+Def: Specifier DecList SEMI_ {$$ = new_node(@$.first_line,Token(NOT_TOKEN,"Def"),3,$1,$2,$3);std::cout<<$$<<std::endl;}
+DecList: Dec {$$ = new_node(@$.first_line,Token(NOT_TOKEN,"DecList"),1,$1);std::cout<<$$<<std::endl;}
+    | Dec COMMA_ DecList {$$ = new_node(@$.first_line,Token(NOT_TOKEN,"DecList"),3,$1,$2,$3);std::cout<<$$<<std::endl;}
+Dec: VarDec {$$ = new_node(@$.first_line,Token(NOT_TOKEN,"Dec"),1,$1);std::cout<<$$<<std::endl;}
+    | VarDec ASSIGNOP_ Exp {$$ = new_node(@$.first_line,Token(NOT_TOKEN,"Dec"),3,$1,$2,$3);std::cout<<$$<<std::endl;}
 
-Exp: Exp ASSIGNOP_ Exp {$$ = new_node(@$.first_line,Token(NOT_TOKEN,"Exp"),3,$1,$2,$3);}
-    | Exp AND_ Exp {$$ = new_node(@$.first_line,Token(NOT_TOKEN,"Exp"),3,$1,$2,$3);}
-    | Exp OR_ Exp {$$ = new_node(@$.first_line,Token(NOT_TOKEN,"Exp"),3,$1,$2,$3);}
-    | Exp RELOP_ Exp {$$ = new_node(@$.first_line,Token(NOT_TOKEN,"Exp"),3,$1,$2,$3);}
-    | Exp PLUS_ Exp {$$ = new_node(@$.first_line,Token(NOT_TOKEN,"Exp"),3,$1,$2,$3);}
-    | Exp MINUS_ Exp {$$ = new_node(@$.first_line,Token(NOT_TOKEN,"Exp"),3,$1,$2,$3);}
-    | Exp STAR_ Exp {$$ = new_node(@$.first_line,Token(NOT_TOKEN,"Exp"),3,$1,$2,$3);}
-    | Exp DIV_ Exp {$$ = new_node(@$.first_line,Token(NOT_TOKEN,"Exp"),3,$1,$2,$3);}
-    | LP_ Exp RP_ {$$ = new_node(@$.first_line,Token(NOT_TOKEN,"Exp"),3,$1,$2,$3);}
-    | MINUS_ Exp {$$ = new_node(@$.first_line,Token(NOT_TOKEN,"Exp"),2,$1,$2);}
-    | NOT_ Exp {$$ = new_node(@$.first_line,Token(NOT_TOKEN,"Exp"),2,$1,$2);}
-    | ID_ LP_ Args RP_ {$$ = new_node(@$.first_line,Token(NOT_TOKEN,"Exp"),4,$1,$2,$3,$4);}
-    | ID_ LP_ RP_ {$$ = new_node(@$.first_line,Token(NOT_TOKEN,"Exp"),3,$1,$2,$3);}
-    | Exp LB_ Exp RB_ {$$ = new_node(@$.first_line,Token(NOT_TOKEN,"Exp"),4,$1,$2,$3,$4);}
-    | Exp DOT_ ID_ {$$ = new_node(@$.first_line,Token(NOT_TOKEN,"Exp"),3,$1,$2,$3);}
-    | ID_ {$$ = new_node(@$.first_line,Token(NOT_TOKEN,"Exp"),1,$1);}
-    | INT_ {$$ = new_node(@$.first_line,Token(NOT_TOKEN,"Exp"),1,$1);}
-    | FLOAT_ {$$ = new_node(@$.first_line,Token(NOT_TOKEN,"Exp"),1,$1);};
-Args: Exp COMMA_ Args {$$ = new_node(@$.first_line,Token(NOT_TOKEN,"Args"),3,$1,$2,$3);}
-    | Exp {$$ = new_node(@$.first_line,Token(NOT_TOKEN,"Args"),1,$1);};
+Exp: Exp ASSIGNOP_ Exp {$$ = new_node(@$.first_line,Token(NOT_TOKEN,"Exp"),3,$1,$2,$3);std::cout<<$$<<std::endl;}
+    | Exp AND_ Exp {$$ = new_node(@$.first_line,Token(NOT_TOKEN,"Exp"),3,$1,$2,$3);std::cout<<$$<<std::endl;}
+    | Exp OR_ Exp {$$ = new_node(@$.first_line,Token(NOT_TOKEN,"Exp"),3,$1,$2,$3);std::cout<<$$<<std::endl;}
+    | Exp RELOP_ Exp {$$ = new_node(@$.first_line,Token(NOT_TOKEN,"Exp"),3,$1,$2,$3);std::cout<<$$<<std::endl;}
+    | Exp PLUS_ Exp {$$ = new_node(@$.first_line,Token(NOT_TOKEN,"Exp"),3,$1,$2,$3);std::cout<<$$<<std::endl;}
+    | Exp MINUS_ Exp {$$ = new_node(@$.first_line,Token(NOT_TOKEN,"Exp"),3,$1,$2,$3);std::cout<<$$<<std::endl;}
+    | Exp STAR_ Exp {$$ = new_node(@$.first_line,Token(NOT_TOKEN,"Exp"),3,$1,$2,$3);std::cout<<$$<<std::endl;}
+    | Exp DIV_ Exp {$$ = new_node(@$.first_line,Token(NOT_TOKEN,"Exp"),3,$1,$2,$3);std::cout<<$$<<std::endl;}
+    | LP_ Exp RP_ {$$ = new_node(@$.first_line,Token(NOT_TOKEN,"Exp"),3,$1,$2,$3);std::cout<<$$<<std::endl;}
+    | MINUS_ Exp {$$ = new_node(@$.first_line,Token(NOT_TOKEN,"Exp"),2,$1,$2);std::cout<<$$<<std::endl;}
+    | NOT_ Exp {$$ = new_node(@$.first_line,Token(NOT_TOKEN,"Exp"),2,$1,$2);std::cout<<$$<<std::endl;}
+    | ID_ LP_ Args RP_ {$$ = new_node(@$.first_line,Token(NOT_TOKEN,"Exp"),4,$1,$2,$3,$4);std::cout<<$$<<std::endl;}
+    | ID_ LP_ RP_ {$$ = new_node(@$.first_line,Token(NOT_TOKEN,"Exp"),3,$1,$2,$3);std::cout<<$$<<std::endl;}
+    | Exp LB_ Exp RB_ {$$ = new_node(@$.first_line,Token(NOT_TOKEN,"Exp"),4,$1,$2,$3,$4);std::cout<<$$<<std::endl;}
+    | Exp DOT_ ID_ {$$ = new_node(@$.first_line,Token(NOT_TOKEN,"Exp"),3,$1,$2,$3);std::cout<<$$<<std::endl;}
+    | ID_ {$$ = new_node(@$.first_line,Token(NOT_TOKEN,"Exp"),1,$1);std::cout<<$$<<std::endl;}
+    | INT_ {$$ = new_node(@$.first_line,Token(NOT_TOKEN,"Exp"),1,$1);std::cout<<$$<<std::endl;}
+    | FLOAT_ {$$ = new_node(@$.first_line,Token(NOT_TOKEN,"Exp"),1,$1);std::cout<<$$<<std::endl;}
+Args: Exp COMMA_ Args {$$ = new_node(@$.first_line,Token(NOT_TOKEN,"Args"),3,$1,$2,$3);std::cout<<$$<<std::endl;}
+    | Exp {$$ = new_node(@$.first_line,Token(NOT_TOKEN,"Args"),1,$1);std::cout<<$$<<std::endl;}
 %%

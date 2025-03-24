@@ -5,6 +5,7 @@
 int yyparse();
 
 static inline pNode new_node(int lineno, const Token &token, int argc, ...) {
+  std::cout<<"new_node():lineno="<<lineno<<";token="<<token.get_attribute()<<std::endl;
   pNode current_node = nullptr;
   current_node = new Node();
   assert(current_node != nullptr);

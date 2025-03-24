@@ -14,4 +14,5 @@ int main(int argc, char **argv) {
   yyrestart(yyin);
   yyparse();
   global_token_list.traverse();
+  preordered_traverse(root);
 }
