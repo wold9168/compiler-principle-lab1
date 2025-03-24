@@ -5,7 +5,4 @@ add_executable(${artifact} ${dir})
 # add_library(${artifact} ${dir})
 target_include_directories(${artifact} PUBLIC include)
 
-target_link_libraries(${artifact} PUBLIC y
-                        bits
-                        parser
-                        )
+target_link_libraries(${artifact} PUBLIC parser y bits)

@@ -1,18 +1,34 @@
-%{
-#include <bits/stdc++.h>
-#include "bits/allds.hpp"
-#define YYSTYPE pNode
-#include "parser.h"
-extern int yylineno;
-int tokenlex(enum TokenType t, const std::string &attribute, YYSTYPE * pt_yylval);
-int yycolumn = 1;
-#define YY_USER_ACTION yylloc->first_line = yylloc->last_line = yylineno;
-%}
 %option noyywrap
-/* %option nounput noinput batch debug */
 %option yylineno
 %option bison-bridge
 %option bison-locations
+%option nounput
+%option noinput
+%{
+#include "parser/parser.hpp"
+#include "parser.h"
+
+extern "C" int yylex (YYSTYPE*, YYLTYPE*);
+// #define YYSTYPE pNode
+
+extern int yylineno;
+int tokenlex(enum TokenType t, const std::string &attribute, YYSTYPE * pt_yylval);
+int yycolumn = 1;
+// #define YY_USER_ACTION yylloc->first_line = yylloc->last_line = yylineno;
+// automatically update location
+#define YY_USER_ACTION \
+    yylloc->first_line = yylloc->last_line; \
+    yylloc->first_column = yylloc->last_column; \
+    for (int i = 0; yytext[i] != '\0'; i++) { \
+        if(yytext[i] == '\n') { \
+            yylloc->last_line++; \
+            yylloc->last_column = 1; \
+        } else { \
+            yylloc->last_column++; \
+        } \
+    }
+
+%}
 
 BLANK [\t ]
 LINEBREAK \n
@@ -107,6 +123,6 @@ LEX_ERROR .
 
 int tokenlex(enum TokenType t, const std::string &attribute, YYSTYPE * pt_yylval) {
   append_to_global_token_list(t, attribute);
-  *pt_yylval = new_token_node(yylineno, t, attribute);
+  pt_yylval->node = new_token_node(yylineno, t, attribute);
   return 0;
 }
