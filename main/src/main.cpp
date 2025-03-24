@@ -1,4 +1,5 @@
 #include "main/main.hpp"
+#include "parser/parser.hpp"
 
 int main(int argc, char **argv) {
   if (argc < 2) {
@@ -10,9 +11,9 @@ int main(int argc, char **argv) {
     std::cerr << "Error: Could not open input file." << std::endl;
     return 1;
   }
-
   yyrestart(yyin);
   yyparse();
-  global_token_list.traverse();
-  preordered_traverse(root);
+  // global_token_list.traverse();
+  if(isNoError)
+    preordered_traverse(root);
 }

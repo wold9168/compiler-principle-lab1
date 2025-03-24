@@ -113,6 +113,7 @@ LEX_ERROR .
 
 {LEX_ERROR} {
     fprintf(stderr,"Error type A at Line %d: Lexical analyser encountered unexpected '%s' \n",yylineno,yytext,yylval);
+    isNoError=false;
 }
 
 %%
